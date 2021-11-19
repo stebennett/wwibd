@@ -32,7 +32,7 @@ const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimul
       }
 
       const tp: number[] = [];
-      const [throughputValues, setThroughputValues] = useState(tp)
+      const [throughputValues, setThroughputValues] = useState(tp);
     
       const addThroughputValue = (tp: number) => {
         setThroughputValues((prevThroughputValues) => [
@@ -42,10 +42,12 @@ const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimul
         )
       }
 
+      const [throughputPeriod, setThroughputPeriod] = useState(7);
+
       const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
           updateSimulationState('RUNNING');
-          let results = Simulate(500, new Date(startDate), outstandingTasks.min, outstandingTasks.max, throughputValues);
+          let results = Simulate(500, new Date(startDate), outstandingTasks.min, outstandingTasks.max, throughputValues, throughputPeriod);
           updateSimulationResults(results);
           updateSimulationState('COMPLETE');
       }
@@ -53,6 +55,7 @@ const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimul
 
   return (
       <Container>
+          <h2>Simulation Options</h2>
         <Form onSubmit={handleSubmit}>
             <Row>
                 <FormGroup as={Col} controlId="startDate">
@@ -72,6 +75,17 @@ const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimul
                         <Form.Control type="number" onChange={ e => updateMaxOutstandingTasks(parseInt(e.target.value)) }></Form.Control>
                     </FloatingLabel>
                 </Col>
+            </Row>
+            <Row>
+                <FormGroup as={Col} controlId="throughputMeasurementPeriod">
+                    <Form.Label>Throughput Measurement Period</Form.Label>
+                    <Form.Select onChange={ e => setThroughputPeriod(parseInt(e.target.value)) }>
+                        <option value="7">7 days</option>
+                        <option value="14">14 days</option>
+                        <option value="21">21 days</option>
+                        <option value="28">28 days</option>
+                    </Form.Select>
+                </FormGroup>
             </Row>
             <ThroughputInput addThroughputValue={addThroughputValue} throughputValues={throughputValues}></ThroughputInput>
             <Row>

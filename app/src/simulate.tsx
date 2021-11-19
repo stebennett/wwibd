@@ -30,7 +30,7 @@ interface IterationStats {
     iterations: Iteration[],
 }
 
-const Simulate = (numberOfSamples: number, startDate: Date, minNumOutstandingTasks: number, maxNumberOutstandingTasks: number, throughputValues: number[]): SimulationResults => {
+const Simulate = (numberOfSamples: number, startDate: Date, minNumOutstandingTasks: number, maxNumberOutstandingTasks: number, throughputValues: number[], throughputPeriod: number): SimulationResults => {
 
     const estimateBetween = (min: number, max: number) : number => {
         return Math.floor(Math.random() * (max - min) + min);
@@ -51,6 +51,7 @@ const Simulate = (numberOfSamples: number, startDate: Date, minNumOutstandingTas
         var weekStartDate = startDate;
 
         let iterations : Iteration[] = [];
+        console.log(throughputPeriod);
 
         while(remainingTasks > 0) {
             let simulatedThroughputSize = pickRandomFromArray(throughputValues);
@@ -58,7 +59,7 @@ const Simulate = (numberOfSamples: number, startDate: Date, minNumOutstandingTas
         
             let iteration: Iteration = {
                 weekStartDate: weekStartDate,
-                weekEndDate: addDays(weekStartDate, 6), // days
+                weekEndDate: addDays(weekStartDate, throughputPeriod - 1), // days
                 throughput: simulatedThroughputSize,
                 tasksRemaining: tasksRemainingAtEndOfIteration,  
             }
@@ -68,7 +69,7 @@ const Simulate = (numberOfSamples: number, startDate: Date, minNumOutstandingTas
 
             // set vars for next week
             remainingTasks = tasksRemainingAtEndOfIteration;    
-            weekStartDate = addDays(weekStartDate, 7); // next week
+            weekStartDate = addDays(weekStartDate, throughputPeriod); // next week
         }
 
         return {
