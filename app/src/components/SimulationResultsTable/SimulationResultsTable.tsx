@@ -14,52 +14,33 @@ const SimulationResultsTable:FC<SimulationResultsTableProps> = ({simulationResul
         return newDate;
     }
 
-    const datesBetween = (startDate: Date, endDate: Date, increment: number) : Date[] => {
-        var dates: Date[] = [];
-        var currentDate = new Date(startDate.valueOf());
-
-        while(currentDate <= endDate) {
-            dates.push(new Date(currentDate.valueOf()))
-            currentDate = addDays(currentDate, 7);
-        }
-        
-        return dates;
-    }
-
-    const minEndingDate = (simulationResults: SimulationResult[]): Date => {
-        return simulationResults.sort((thisResult: SimulationResult, otherResult: SimulationResult) : number => {
+    const sortByCompleteDate = (simulationResults: SimulationResult[]) : SimulationResult[] => {
+        return [...simulationResults].sort((thisResult: SimulationResult, otherResult: SimulationResult) : number => {
             return thisResult.iterationStats.allTasksCompleteDate.valueOf() - otherResult.iterationStats.allTasksCompleteDate.valueOf()
-        })[0].iterationStats.allTasksCompleteDate
+        });
     }
 
-    const maxEndingDate = (simulationResults: SimulationResult[]): Date => {
-        return simulationResults.sort((thisResult: SimulationResult, otherResult: SimulationResult) : number => {
-            return otherResult.iterationStats.allTasksCompleteDate.valueOf() - thisResult.iterationStats.allTasksCompleteDate.valueOf()
-        })[0].iterationStats.allTasksCompleteDate   
+    const percentile = (simulationResults: SimulationResult[], percent: number): SimulationResult => {
+        var index = Math.ceil( percent / 100.0 * simulationResults.length);
+        index = index < 0 ? 0 : index;
+        return simulationResults[index - 1];
     }
 
-    const numberOfIterationsComplete = (simulationResults: SimulationResult[], compareToDate: Date): number => {
-        return simulationResults.filter((result) => {
-            return result.iterationStats.allTasksCompleteDate <= compareToDate
-        }).length;
-    }
-
-    console.log(simulationResults);
+    const percentiles = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100];
+    const sortedSimulationResults : SimulationResult[] = sortByCompleteDate(simulationResults.results);
 
     return (
         <Container>
             <Table striped bordered hover>
                 <thead>
-                    <th>Iteration End Date</th>
-                    <th>Number of Iterations Complete</th>
                     <th>Likelihood</th>
+                    <th>Date</th>
                 </thead>
                 <tbody>
-                    {datesBetween(minEndingDate(simulationResults.results), maxEndingDate(simulationResults.results), 7).map((date, index) => (
+                    {percentiles.map((p, index) => (
                         <tr key={ index }>
-                            <td>{ date.toDateString() }</td>
-                            <td>{ numberOfIterationsComplete(simulationResults.results, date) }</td>
-                            <td>{ Math.round((numberOfIterationsComplete(simulationResults.results, date) / simulationResults.samples) * 100) }%</td>
+                            <td>{ p }%</td>
+                            <td>{ percentile(sortedSimulationResults, p).iterationStats.allTasksCompleteDate.toDateString() }</td>
                         </tr>
                     ))}
                 </tbody>

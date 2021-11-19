@@ -3,6 +3,7 @@ import OptionsForm from '../OptionsForm/OptionsForm';
 import CalculationsOutput from '../CalculationsOutput/CalculationsOutput';
 import { useState } from 'react';
 import { SimulationResult } from '../../simulate';
+import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
 
@@ -20,10 +21,12 @@ function App() {
   })
 
   return (
-    <div className="App">
-      <OptionsForm updateSimulationResults={setSimulationResults} updateSimulationState={setSimulationState} />
-      <CalculationsOutput simulationResults={simulationResults} simulationState={simulationState}/>
-    </div>
+    <Container className="App">
+      <Row>
+        <Col><OptionsForm updateSimulationResults={setSimulationResults} updateSimulationState={setSimulationState} /></Col>
+        <Col><CalculationsOutput simulationResults={simulationResults} simulationState={simulationState}/></Col>
+      </Row>
+    </Container>
   )
 }
 
