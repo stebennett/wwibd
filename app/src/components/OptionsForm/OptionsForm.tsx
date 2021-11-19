@@ -1,26 +1,63 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, Col, Container, FloatingLabel, Form, FormGroup, ListGroup, Row, Table } from 'react-bootstrap';
+import { Simulate } from '../../simulate';
 import ThroughputInput from '../ThroughputInput/ThroughputInput';
 
 import './OptionsForm.css';
 
 interface OptionsFormProps {
-    updateStartDate: any,
-    updateMinOutstandingTasks: any,
-    updateMaxOutstandingTasks: any,
-    addThroughputValue: any,
-    throughputValues: number[],
+    updateSimulationResults: any,
+    updateSimulationState: any,
 }
 
-const OptionsForm: FC<OptionsFormProps> = ({updateStartDate, updateMinOutstandingTasks, updateMaxOutstandingTasks, addThroughputValue, throughputValues}) => {
+const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimulationState}) => {
+
+    const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0])
+    const [outstandingTasks, setOutstandingTasks] = useState({
+        min: 0,
+        max: 0
+      })
+      const updateMinOutstandingTasks = (min: number) => {
+        setOutstandingTasks({
+          min: min,
+          max: outstandingTasks.max
+        })
+      }
+    
+      const updateMaxOutstandingTasks = (max: number) => {
+        setOutstandingTasks({
+          min: outstandingTasks.min,
+          max: max
+        })
+      }
+
+      const tp: number[] = [];
+      const [throughputValues, setThroughputValues] = useState(tp)
+    
+      const addThroughputValue = (tp: number) => {
+        setThroughputValues((prevThroughputValues) => [
+            ...prevThroughputValues,
+            tp
+          ]
+        )
+      }
+
+      const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+          event.preventDefault();
+          updateSimulationState('RUNNING');
+          let results = Simulate(500, new Date(startDate), outstandingTasks.min, outstandingTasks.max, throughputValues);
+          updateSimulationResults(results);
+          updateSimulationState('COMPLETE');
+      }
+
 
   return (
       <Container>
-        <Form>
+        <Form onSubmit={handleSubmit}>
             <Row>
                 <FormGroup as={Col} controlId="startDate">
                     <Form.Label>Start Date</Form.Label>
-                    <Form.Control type="date" onChange={ e => updateStartDate(e.target.value) }/>
+                    <Form.Control type="date" onChange={ e => setStartDate(e.target.value) }/>
                 </FormGroup>
             </Row>
             <Row>

@@ -1,22 +1,23 @@
 import React, { FC, useState } from 'react';
+import { SimulationResults } from '../../simulate';
+import SimulationResultsTable from '../SimulationResultsTable/SimulationResultsTable';
 
 interface CalculationsOutputProps {
-    startDate: string,
-    outstandingTasks: {
-        min: number,
-        max: number
-    }
+    simulationResults: SimulationResults,
+    simulationState: string,
 }
 
-const CalculationsOutput:FC<CalculationsOutputProps> = ({startDate, outstandingTasks}) => {
+const CalculationsOutput:FC<CalculationsOutputProps> = ({simulationResults, simulationState}) => {
+
+
     return (
         <div>
-            <h2>Output</h2>
-            { startDate }
-            <p>Outstanding tasks</p>
-            <p>Min: { outstandingTasks.min }; Max: { outstandingTasks.max }</p>
+            <h2>Simulation Results</h2>
+            <p>{ simulationState }</p>
+            { simulationState == 'COMPLETE' && <SimulationResultsTable simulationResults={simulationResults}/> }
         </div>
     )
+        
 }
 
 export default CalculationsOutput;
