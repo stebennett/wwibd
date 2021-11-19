@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/wwibd/static/css/main.b47b7a65.chunk.css",
+    "main.js": "/wwibd/static/js/main.b47a7595.chunk.js",
+    "main.js.map": "/wwibd/static/js/main.b47a7595.chunk.js.map",
+    "runtime-main.js": "/wwibd/static/js/runtime-main.fc430b51.js",
+    "runtime-main.js.map": "/wwibd/static/js/runtime-main.fc430b51.js.map",
+    "static/css/2.4659568d.chunk.css": "/wwibd/static/css/2.4659568d.chunk.css",
+    "static/js/2.aa6b1b73.chunk.js": "/wwibd/static/js/2.aa6b1b73.chunk.js",
+    "static/js/2.aa6b1b73.chunk.js.map": "/wwibd/static/js/2.aa6b1b73.chunk.js.map",
+    "static/js/3.6bbb4397.chunk.js": "/wwibd/static/js/3.6bbb4397.chunk.js",
+    "static/js/3.6bbb4397.chunk.js.map": "/wwibd/static/js/3.6bbb4397.chunk.js.map",
+    "index.html": "/wwibd/index.html",
+    "static/css/2.4659568d.chunk.css.map": "/wwibd/static/css/2.4659568d.chunk.css.map",
+    "static/css/main.b47b7a65.chunk.css.map": "/wwibd/static/css/main.b47b7a65.chunk.css.map",
+    "static/js/2.aa6b1b73.chunk.js.LICENSE.txt": "/wwibd/static/js/2.aa6b1b73.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fc430b51.js",
+    "static/css/2.4659568d.chunk.css",
+    "static/js/2.aa6b1b73.chunk.js",
+    "static/css/main.b47b7a65.chunk.css",
+    "static/js/main.b47a7595.chunk.js"
+  ]
+}
