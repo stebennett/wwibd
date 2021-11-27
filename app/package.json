@@ -21,12 +21,14 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "yarn watch:css && react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
+    "build": "yarn build:css && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +50,9 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.6",
-    "@types/react-bootstrap": "^0.32.28"
+    "@types/react-bootstrap": "^0.32.28",
+    "autoprefixer": "^10.4.0",
+    "postcss-cli": "^9.0.2",
+    "tailwindcss": "^2.2.19"
   }
 }

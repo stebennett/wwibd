@@ -1,4 +1,3 @@
-import './App.css';
 import OptionsForm from '../OptionsForm/OptionsForm';
 import CalculationsOutput from '../CalculationsOutput/CalculationsOutput';
 import { useState } from 'react';
