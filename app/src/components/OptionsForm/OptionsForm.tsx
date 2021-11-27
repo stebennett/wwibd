@@ -3,8 +3,6 @@ import { Button, Col, Container, FloatingLabel, Form, FormGroup, ListGroup, Row,
 import { Simulate } from '../../simulate';
 import ThroughputInput from '../ThroughputInput/ThroughputInput';
 
-import './OptionsForm.css';
-
 interface OptionsFormProps {
     updateSimulationResults: any,
     updateSimulationState: any,
@@ -54,49 +52,51 @@ const OptionsForm: FC<OptionsFormProps> = ({updateSimulationResults, updateSimul
 
 
   return (
-      <Container>
+      <div>
           <h2>Simulation Options</h2>
-        <Form onSubmit={handleSubmit}>
-            <Row>
-                <FormGroup as={Col} controlId="startDate">
-                    <Form.Label>Start Date</Form.Label>
-                    <Form.Control type="date" onChange={ e => setStartDate(e.target.value) }/>
-                </FormGroup>
-            </Row>
-            <Row>
-                <p>Number of Outstanding Tasks</p>
-                <Col>
-                    <FloatingLabel controlId="minNumOutstandingTasks" label="Min">
-                        <Form.Control type="number" onChange={ e => updateMinOutstandingTasks(parseInt(e.target.value)) }></Form.Control>
-                    </FloatingLabel>
-                </Col>
-                <Col>
-                    <FloatingLabel controlId="maxNumOutstandingTasks" label="Max">
-                        <Form.Control type="number" onChange={ e => updateMaxOutstandingTasks(parseInt(e.target.value)) }></Form.Control>
-                    </FloatingLabel>
-                </Col>
-            </Row>
-            <Row>
-                <FormGroup as={Col} controlId="throughputMeasurementPeriod">
-                    <Form.Label>Throughput Measurement Period</Form.Label>
-                    <Form.Select onChange={ e => setThroughputPeriod(parseInt(e.target.value)) }>
-                        <option value="7">7 days</option>
-                        <option value="14">14 days</option>
-                        <option value="21">21 days</option>
-                        <option value="28">28 days</option>
-                    </Form.Select>
-                </FormGroup>
-            </Row>
-            <ThroughputInput addThroughputValue={addThroughputValue} throughputValues={throughputValues}></ThroughputInput>
-            <Row>
-                <Col>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Col>
-            </Row>
-        </Form>
-      </Container>
+          <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-3">
+                  <div className="colspan-2">
+                    <label>
+                        <span>Start Date</span>
+                        <input type="date" onChange={ e => setStartDate(e.target.value) }/>
+                    </label>
+                  </div>
+                  <div className="colspan-2">
+                      <p>Number of Outstanding Tasks</p>
+                  </div>
+                  <div>
+                      <label>
+                          <span>Min</span>
+                          <input type="number" onChange={ e => updateMinOutstandingTasks(parseInt(e.target.value)) }/>
+                      </label>
+                  </div>
+                  <div>
+                      <label>
+                          <span>Max</span>
+                          <input type="number" onChange={ e => updateMaxOutstandingTasks(parseInt(e.target.value)) }/>
+                      </label>
+                  </div>
+                  <div className="colspan-2">
+                      <label>
+                          <span>Throughput Measurement Period</span>
+                          <select onChange={ e => setThroughputPeriod(parseInt(e.target.value)) }>
+                            <option value="7">7 days</option>
+                            <option value="14">14 days</option>
+                            <option value="21">21 days</option>
+                            <option value="28">28 days</option>
+                          </select>
+                      </label>
+                  </div>
+                  <div className="colspan-2">
+                    <ThroughputInput addThroughputValue={addThroughputValue} throughputValues={throughputValues}></ThroughputInput>
+                  </div>
+                  <div className="colspan-2">
+                      <button type="submit">Simulate</button>
+                  </div>
+                </div>
+            </form>
+      </div>
   );
 }
 

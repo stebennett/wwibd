@@ -2,7 +2,6 @@ import OptionsForm from '../OptionsForm/OptionsForm';
 import CalculationsOutput from '../CalculationsOutput/CalculationsOutput';
 import { useState } from 'react';
 import { SimulationResult } from '../../simulate';
-import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
 
@@ -20,12 +19,10 @@ function App() {
   })
 
   return (
-    <Container className="App">
-      <Row>
-        <Col><OptionsForm updateSimulationResults={setSimulationResults} updateSimulationState={setSimulationState} /></Col>
-        <Col><CalculationsOutput simulationResults={simulationResults} simulationState={simulationState}/></Col>
-      </Row>
-    </Container>
+    <div className="grid grid-cols-2 gap-4 App">
+      <div><OptionsForm updateSimulationResults={setSimulationResults} updateSimulationState={setSimulationState} /></div>
+      <div><CalculationsOutput simulationResults={simulationResults} simulationState={simulationState}/></div>
+    </div>
   )
 }
 
